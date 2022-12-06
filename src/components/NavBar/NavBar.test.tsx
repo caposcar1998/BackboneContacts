@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import NavBar from './NavBar';
 
-test('renders AppBar component', () => {
-  render(<App />);
+test('renders contact us button', () => {
+  render(<NavBar />);
   const linkElement = screen.getByText(/Contact Us/i);
   expect(linkElement).toBeInTheDocument();
 });
