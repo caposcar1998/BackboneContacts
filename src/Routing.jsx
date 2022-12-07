@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Contacts from './pages/Contacts/Contacts';
 import CreateContact from './pages/CreateContact/CreateContact';
 import DeleteContact from './pages/DeleteContact/DeleteContact';
+import EditContact from './pages/EditContact/EditContact';
 
 function Routing(){
 
@@ -29,7 +30,7 @@ function Routing(){
               />
               <Route
                 exact path='edit/:id'
-                element={<h1>edit</h1>}
+                element={<EditContact/>}
               />
               <Route
                 exact path='delete/:id'

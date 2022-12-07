@@ -39,10 +39,6 @@ function TableContacts() {
       })
   }
 
-  function deleteContact(id: string){
-    navigate(`/delete/${id}`);
-  }
-  
 
   const handleChangePage = (event: unknown, newPage: number) => {
     console.log("cambio"+ page)
@@ -77,14 +73,14 @@ function TableContacts() {
             <TableCell>{row["email"]}</TableCell>
             <TableCell>{row["phone"]}</TableCell>
             <TableCell>
-              <IconButton aria-label="delete" onClick={() => deleteContact(row["_id"])}>
+              <IconButton aria-label="delete" onClick={() => navigate(`/delete/${row["_id"]}`)}>
                 <DeleteIcon 
                   color='error'
                 />
               </IconButton>
             </TableCell>
             <TableCell>
-              <IconButton aria-label="edit">
+              <IconButton aria-label="edit" onClick={() => navigate(`/edit/${row["_id"]}`)}>
                   <EditIcon
                     color='warning'
                   />

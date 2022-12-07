@@ -22,8 +22,6 @@ function DeleteContact(){
         }, []);
 
     function deleteC(id: string){
-        console.log(deleteContactsUrl+"/"+id)
-        console.log(id)
         axios.delete(`${deleteContactsUrl}/${id}`)
           .then(response => {
               console.log(response)
