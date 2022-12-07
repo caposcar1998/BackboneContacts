@@ -1,26 +1,50 @@
 import { useForm } from "react-hook-form";
 import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { Button } from "@mui/material";
 import GreenButton from "../../components/GenericButton/GenericButton";
+import axios from 'axios';
+
+type Contact = {
+  firstName : string
+  lastName : string
+  email: string
+  phone: Number
+}
 
 function CreateContact(){
 
+  const retrieveContactUrl = process.env.REACT_APP_URL_CLIENTS || ""
+
     const { register, handleSubmit } = useForm();
-    const onSubmit = (data: any )=> console.log(data);
+    const onSubmit = (data: any )=> Create(data);
+
+    function create(){
+      console.log(onSubmit)
+    }
+
+    function Create(contact: Contact){
+      axios.post(`${retrieveContactUrl}`,{
+        "firstName": contact.firstName,
+        "lastName": contact.lastName,
+        "email": contact.email,
+        "phone": contact.phone         
+      })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(e => {
+            console.log(e)
+        })
+    }
 
     return(
     <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField {...register("firstName")} />
-      <Select {...register("gender")}>
-        <MenuItem value="female">female</MenuItem>
-        <MenuItem value="male">male</MenuItem>
-        <MenuItem value="other">other</MenuItem>
-      </Select>
+      <TextField label="Nombre"  {...register("firstName", { required: true, maxLength: 20 })} />
+      <TextField label="Apellido" {...register("lastName", { required: true, pattern: /^[A-Za-z]+$/i })} />
+      <TextField label="Email" {...register("email", { required: true, pattern: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$/i })} />
+      <TextField label="Numero" {...register("phone", { required: true, pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i })} />
       <GreenButton
         text="Crear"
-        action={() => console.log()}
+        action={create}
       />
     </form>
     )
