@@ -2,6 +2,7 @@ import React from 'react';
 import { AppBar, Button, Grid, Toolbar } from '@mui/material';
 import { Box } from '@mui/system';
 import logo from '../../media/backboneLogo.svg';
+import GreenButton from '../GenericButton/GenericButton';
 
 function NavBar(){
 
@@ -21,11 +22,10 @@ function NavBar(){
                     </Grid>
                     <Grid item xs={4}/>
                     <Grid item xs={4}>
-                        <Button 
-                            sx={{backgroundColor : "#3feea5"}}
-                            variant="contained">
-                                Contact Us
-                        </Button>     
+                        <GreenButton
+                        text='Contact Us'
+                        action={() => console.log()}
+                        /> 
                     </Grid>                
                 </Grid>
           </Toolbar>

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,63 +9,81 @@ import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
+import TablePagination from '@mui/material/TablePagination';
+import { useNavigate } from "react-router-dom";
+
+import axios from 'axios';
 
 
 function TableContacts() {
 
-  function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-  ) {
-    return { name, calories, fat, carbs, protein };
+  const retrieveContactsUrl = process.env.REACT_APP_URL_CLIENTS || ""
+  
+  const [contacts, setContacts] = useState([])
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [page, setPage] = useState(0)
+  const navigate = useNavigate();
+
+  useEffect (() => {
+    retrieveContacts(1)
+    }, []);
+
+  function retrieveContacts(page: number){
+    axios.get(`${retrieveContactsUrl}?page=${page}`)
+      .then(response => {
+          console.log(response)
+          setContacts(response["data"]["results"])
+      })
+      .catch(e => {
+          console.log(e)
+      })
   }
 
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
+  function deleteContact(id: string){
+    navigate(`/delete/${id}`);
+  }
+  
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    console.log("cambio"+ page)
+    retrieveContacts(page+1)
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
 
+    <Paper>
     <TableContainer component={Paper}>
     <Table sx={{ minWidth: 650 }} aria-label="simple table">
       <TableHead>
         <TableRow>
-          <TableCell>Contact</TableCell>
-          <TableCell align="right">Calories</TableCell>
-          <TableCell align="right">Fat&nbsp;(g)</TableCell>
-          <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-          <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          <TableCell align="right"/>
+          <TableCell>Nombre</TableCell>
+          <TableCell>Apellido</TableCell>
+          <TableCell>Email</TableCell>
+          <TableCell>Numero</TableCell>
+          <TableCell>Eliminar</TableCell>
+          <TableCell>Editar</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row) => (
-          <TableRow
-            key={row.name}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-          >
-            <TableCell component="th" scope="row">
-              {row.name}
-            </TableCell>
-            <TableCell align="right">{row.calories}</TableCell>
-            <TableCell align="right">{row.fat}</TableCell>
-            <TableCell align="right">{row.carbs}</TableCell>
-            <TableCell align="right">{row.protein}</TableCell>
-            <TableCell align='right'>
-              <IconButton aria-label="delete">
-                <DeleteIcon
+        {contacts.map((row) => (
+          <TableRow key={row["_id"]}>
+            <TableCell>{row["firstName"]}</TableCell>
+            <TableCell>{row["lastName"]}</TableCell>
+            <TableCell>{row["email"]}</TableCell>
+            <TableCell>{row["phone"]}</TableCell>
+            <TableCell>
+              <IconButton aria-label="delete" onClick={() => deleteContact(row["_id"])}>
+                <DeleteIcon 
                   color='error'
                 />
               </IconButton>
             </TableCell>
-            <TableCell align='right'>
+            <TableCell>
               <IconButton aria-label="edit">
                   <EditIcon
                     color='warning'
@@ -77,6 +95,16 @@ function TableContacts() {
       </TableBody>
     </Table>
   </TableContainer>
+  <TablePagination
+  rowsPerPageOptions={[10]}
+  component="div"
+  count={contacts.length}
+  page={page}
+  rowsPerPage={rowsPerPage}
+  onPageChange={handleChangePage}
+  onRowsPerPageChange={handleChangeRowsPerPage}
+  />
+  </Paper>
   );
 }
 

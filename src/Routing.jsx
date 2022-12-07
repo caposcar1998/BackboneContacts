@@ -1,10 +1,14 @@
 import { Grid } from '@mui/material';
-import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Contacts from './pages/Contacts/Contacts';
+import CreateContact from './pages/CreateContact/CreateContact';
+import DeleteContact from './pages/DeleteContact/DeleteContact';
 
 function Routing(){
+
+
     return(
+      
       <Grid
         container
         spacing={0}
@@ -20,16 +24,16 @@ function Routing(){
                 element={<Contacts/>}
               />
               <Route
-                path='create'
-                element={<h1>create</h1>}
+                exact path='create'
+                element={<CreateContact/>}
               />
               <Route
-                path='edit/:id'
+                exact path='edit/:id'
                 element={<h1>edit</h1>}
               />
               <Route
-                path='delete/:id'
-                element={<h1>delete</h1>}
+                exact path='delete/:id'
+                element={<DeleteContact/>}
               />
               <Route path="*" element={<h1>This page does not exists</h1>} />
           </Routes>

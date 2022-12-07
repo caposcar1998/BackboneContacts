@@ -1,4 +1,4 @@
-import { Container, Grid, Paper } from '@mui/material';
+import { Button, Container, Grid, Paper } from '@mui/material';
 import TableContacts from './components/TableContacts/TableContacts';
 
 
@@ -12,6 +12,7 @@ function Contacts(){
         >
         <Container>
             <Paper elevation={3} >
+                <Button>Crear nuevo registro</Button>
                 <TableContacts/>
             </Paper>
         </Container>
