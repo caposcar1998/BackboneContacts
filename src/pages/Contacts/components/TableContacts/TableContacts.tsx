@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { UrlContext } from '../../../../App';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,7 +18,8 @@ import axios from 'axios';
 
 function TableContacts() {
 
-  const retrieveContactsUrl = process.env.REACT_APP_URL_CLIENTS || ""
+  const contactsUrl = useContext(UrlContext);
+ 
   
   const [contacts, setContacts] = useState([])
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -29,7 +31,7 @@ function TableContacts() {
     }, []);
 
   function retrieveContacts(page: number){
-    axios.get(`${retrieveContactsUrl}?page=${page}`)
+    axios.get(`${contactsUrl}?page=${page}`)
       .then(response => {
           console.log(response)
           setContacts(response["data"]["results"])

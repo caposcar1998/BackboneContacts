@@ -1,14 +1,15 @@
 import { Grid, Paper } from "@mui/material"
 import axios from 'axios';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { UrlContext } from "../../App";
 import GenericAlert from "../../components/GenericAlert/GenericAlert";
 import GreenButton from "../../components/GenericButton/GenericButton";
 
 
 function DeleteContact(){
 
-    const deleteContactsUrl = process.env.REACT_APP_URL_CLIENTS || ""
+    const contactsUrl = useContext(UrlContext);
     const [contact, setContact] = useState()
     const [typeAlert, setTypeAlert] = useState()
     const [message, setAlert] = useState("hola crayola")
@@ -22,7 +23,7 @@ function DeleteContact(){
         }, []);
 
     function deleteC(id: string){
-        axios.delete(`${deleteContactsUrl}/${id}`)
+        axios.delete(`${contactsUrl}/${id}`)
           .then(response => {
               console.log(response)
               setAlertVisibility(true)
@@ -34,7 +35,7 @@ function DeleteContact(){
       }
 
       function retrieveContact(id: string){
-        axios.get(`${deleteContactsUrl}/${id}`)
+        axios.get(`${contactsUrl}/${id}`)
           .then(response => {
               setContact(response["data"])
           })

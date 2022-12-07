@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import TextField from '@mui/material/TextField';
 import GreenButton from "../../components/GenericButton/GenericButton";
 import axios from 'axios';
+import { useContext } from "react";
+import { UrlContext } from "../../App";
 
 type Contact = {
   firstName : string
@@ -12,7 +14,7 @@ type Contact = {
 
 function CreateContact(){
 
-  const retrieveContactUrl = process.env.REACT_APP_URL_CLIENTS || ""
+  const contactsUrl = useContext(UrlContext);
 
     const { register, handleSubmit } = useForm();
     const onSubmit = (data: any )=> Create(data);
@@ -22,7 +24,7 @@ function CreateContact(){
     }
 
     function Create(contact: Contact){
-      axios.post(`${retrieveContactUrl}`,{
+      axios.post(`${contactsUrl}`,{
         "firstName": contact.firstName,
         "lastName": contact.lastName,
         "email": contact.email,

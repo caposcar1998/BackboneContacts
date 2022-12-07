@@ -3,8 +3,9 @@ import TextField from '@mui/material/TextField';
 import { useParams } from "react-router-dom";
 import GreenButton from "../../components/GenericButton/GenericButton";
 import axios from 'axios';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Contacts from "../Contacts/Contacts";
+import { UrlContext } from "../../App";
 
 type Contact = {
     firstName : string
@@ -15,8 +16,8 @@ type Contact = {
   
 
 function EditContact(){
-    const retrieveContactUrl = process.env.REACT_APP_URL_CLIENTS || ""
-
+    
+  const contactsUrl = useContext(UrlContext);
     let { id } = useParams();
 
     const { register, handleSubmit, reset } = useForm();
@@ -31,7 +32,7 @@ function EditContact(){
 
     function Edit(data: any){
         console.log(data)
-      axios.put(`${retrieveContactUrl}/${id}`,{
+      axios.put(`${contactsUrl}/${id}`,{
         "firstName": data["firstName"],
         "lastName": data["lastName"],
         "email": data["email"],
@@ -46,7 +47,7 @@ function EditContact(){
     }
 
     function retrieveContact(id: string){
-        axios.get(`${retrieveContactUrl}/${id}`)
+        axios.get(`${contactsUrl}/${id}`)
           .then(response => {
               setContact(response["data"])
               console.log(response)
