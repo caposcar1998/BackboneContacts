@@ -1,14 +1,14 @@
-import { FunctionComponent, SyntheticEvent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import Alert from "@mui/material/Alert";
 
-type GenericAlert = {
+type GenericAlertType = {
   typeAlert: any;
   message: string;
   alertVisibility: boolean;
   setAlertVisibility: Function;
 };
 
-const GenericAlert: FunctionComponent<GenericAlert> = ({
+const GenericAlert: FunctionComponent<GenericAlertType> = ({
   typeAlert,
   message,
   alertVisibility,

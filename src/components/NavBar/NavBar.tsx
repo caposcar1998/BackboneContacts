@@ -11,7 +11,7 @@ function NavBar() {
         <Toolbar>
           <Grid container>
             <Grid item xs={4} alignItems="center" justifyContent="center">
-              <a href="https://www.backbonesystems.io/">
+              <a href="https://www.backbonesystems.io/" id="backBoneLogo">
                 <img
                   src={logo}
                   style={{ maxWidth: 200 }}

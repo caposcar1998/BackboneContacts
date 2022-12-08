@@ -20,3 +20,7 @@ clint: #Check linter of project
 .PHONY: lint
 lint: #Fixles linter of project
 	npm run lint -- --fix
+
+.PHONY: test
+test: #tests
+	npm test -- -u -t="ColorPicker"
