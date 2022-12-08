@@ -12,3 +12,11 @@ run: # Run the application in a container
 
 	$(COMPOSE) -f $(COMPOSE_FILE) build client
 	$(COMPOSE) -f $(COMPOSE_FILE) up -d client
+
+.PHONY: clint
+clint: #Check linter of project
+	npm run lint
+
+.PHONY: lint
+lint: #Fixles linter of project
+	npm run lint -- --fix
