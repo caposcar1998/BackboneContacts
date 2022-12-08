@@ -1,6 +1,6 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UrlContext } from "../../App";
 import GenericAlert from "../../components/GenericAlert/GenericAlert";

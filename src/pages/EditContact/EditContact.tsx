@@ -3,24 +3,22 @@ import TextField from "@mui/material/TextField";
 import { useParams } from "react-router-dom";
 import GreenButton from "../../components/GenericButton/GenericButton";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { UrlContext } from "../../App";
 import useRetrieveContact from "../../hooks/useRetrieveContact";
 import { Grid, Typography } from "@mui/material";
 
-
 function EditContact() {
   const contactsUrl = useContext(UrlContext);
   let { id } = useParams();
-  const contact: any = useRetrieveContact(id);
-
   const { register, handleSubmit, reset } = useForm();
+  const contact: any = useRetrieveContact(id, reset);
+
   const onSubmit = (data: any) => Edit(data);
 
   useEffect(() => {}, [reset]);
 
   function Edit(data: any) {
-    console.log(contact["contact"]["firstName"]);
     axios
       .put(`${contactsUrl}/${id}`, {
         firstName: data["firstName"],
@@ -100,7 +98,7 @@ function EditContact() {
               />
             </Grid>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <Grid
               container
               direction="column"
