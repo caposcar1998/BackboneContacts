@@ -1,13 +1,13 @@
 import { Button } from "@mui/material";
 import { FunctionComponent } from "react";
 
-type GenericButton = {
+type GenericButtonType = {
   text: string;
-  action: any;
+  action?: any;
   color?: string;
 };
 
-const GenericButton: FunctionComponent<GenericButton> = ({
+const GenericButton: FunctionComponent<GenericButtonType> = ({
   text,
   action,
   color,

@@ -19,36 +19,61 @@ function TableContacts() {
   const contactsUrl = useContext(UrlContext);
 
   const [contacts, setContacts] = useState([]);
+  const [totalContacts, setTotalContacts] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    retrieveContacts(1);
-  }, []);
+    retrieveContacts();
+    retrieveNumberContacts();
+  }, [setPage, setContacts, setRowsPerPage]);
 
-  function retrieveContacts(page: number) {
+  function retrieveContacts() {
+    console.log(rowsPerPage);
+    console.log(`${contactsUrl}?page=${page}?perPage=${rowsPerPage}`);
+    if (page === 0) {
+      axios
+        .get(`${contactsUrl}?perPage=${rowsPerPage}`)
+        .then((response) => {
+          setContacts(response["data"]["results"]);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      axios
+        .get(`${contactsUrl}?page=${page}?perPage=${rowsPerPage}`)
+        .then((response) => {
+          setContacts(response["data"]["results"]);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }
+
+  function retrieveNumberContacts() {
     axios
-      .get(`${contactsUrl}?page=${page}`)
+      .get(`${contactsUrl}/count`)
       .then((response) => {
-        console.log(response);
-        setContacts(response["data"]["results"]);
+        setTotalContacts(response["data"]);
       })
       .catch((e) => {
         console.log(e);
       });
   }
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    console.log("cambio" + page);
-    retrieveContacts(page + 1);
+  const handleChangePage = (_: unknown, newPage: number) => {
+    setPage(newPage);
+    retrieveContacts();
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    retrieveContacts();
   };
 
   return (
@@ -94,9 +119,9 @@ function TableContacts() {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10]}
+        rowsPerPageOptions={[5, 10, 20, 30]}
         component="div"
-        count={contacts.length}
+        count={totalContacts}
         page={page}
         rowsPerPage={rowsPerPage}
         onPageChange={handleChangePage}

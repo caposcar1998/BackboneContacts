@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
-import GreenButton from "../../components/GenericButton/GenericButton";
+import GenericButton from "../../components/GenericButton/GenericButton";
 import axios from "axios";
 import { useContext } from "react";
 import { UrlContext } from "../../App";
@@ -109,7 +109,7 @@ function CreateContact() {
               alignItems="center"
               justifyContent="center"
             >
-              <GreenButton text="Crear" action={onSubmit} />
+              <GenericButton text="Crear" action={onSubmit} />
             </Grid>
           </Grid>
         </Grid>

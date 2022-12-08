@@ -22,7 +22,6 @@ const useRetrieveContact = (id: any, reset?: any) => {
         console.log("error");
         console.log(e);
       });
-    
   }
 
   return { contact };

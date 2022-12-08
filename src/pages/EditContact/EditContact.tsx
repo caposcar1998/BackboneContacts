@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { useParams } from "react-router-dom";
-import GreenButton from "../../components/GenericButton/GenericButton";
+import GenericButton from "../../components/GenericButton/GenericButton";
 import axios from "axios";
 import { useContext, useEffect } from "react";
 import { UrlContext } from "../../App";
@@ -105,7 +105,7 @@ function EditContact() {
               alignItems="center"
               justifyContent="center"
             >
-              <GreenButton text="Editar" action={onSubmit} />
+              <GenericButton text="Editar" action={onSubmit} />
             </Grid>
           </Grid>
         </Grid>
