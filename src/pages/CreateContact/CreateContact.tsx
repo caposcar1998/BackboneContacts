@@ -4,6 +4,7 @@ import GreenButton from "../../components/GenericButton/GenericButton";
 import axios from 'axios';
 import { useContext } from "react";
 import { UrlContext } from "../../App";
+import { Grid, Typography } from "@mui/material";
 
 type Contact = {
   firstName : string
@@ -39,16 +40,56 @@ function CreateContact(){
     }
 
     return(
+
+      <>
+      <Typography variant="h1">Crear nuevo contacto</Typography>
     <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField label="Nombre"  {...register("firstName", { required: true, maxLength: 20 })} />
-      <TextField label="Apellido" {...register("lastName", { required: true, pattern: /^[A-Za-z]+$/i })} />
-      <TextField label="Email" {...register("email", { required: true, pattern: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$/i })} />
-      <TextField label="Numero" {...register("phone", { required: true, pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i })} />
-      <GreenButton
-        text="Crear"
-        action={create}
-      />
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+        <Grid container   
+            direction="column"
+            alignItems="center"
+            justifyContent="center">
+        <TextField label="Nombre"  {...register("firstName", { required: true, maxLength: 20 })} />
+        </Grid>
+        </Grid>
+        <Grid item xs={6}>
+        <Grid container   
+            direction="column"
+            alignItems="center"
+            justifyContent="center">
+        <TextField label="Apellido" {...register("lastName", { required: true, pattern: /^[A-Za-z]+$/i })} />
+        </Grid>
+        </Grid>
+        <Grid item xs={6}>
+        <Grid container   
+            direction="column"
+            alignItems="center"
+            justifyContent="center">
+        <TextField label="Email" {...register("email", { required: true, pattern: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$/i })} />
+        </Grid>
+        </Grid>
+        <Grid item xs={6}>
+        <Grid container   
+            direction="column"
+            alignItems="center"
+            justifyContent="center">
+        <TextField label="Numero" {...register("phone", { required: true, pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i })} />
+        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container   
+            direction="column"
+            alignItems="center"
+            justifyContent="center">
+              <GreenButton text="Crear" action={create}/>
+          </Grid>
+        </Grid>
+      </Grid>
+      
     </form>
+
+    </>
     )
 }
 

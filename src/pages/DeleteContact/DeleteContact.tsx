@@ -1,26 +1,24 @@
-import { Grid, Paper } from "@mui/material"
+import { Grid, Paper, Typography } from "@mui/material"
 import axios from 'axios';
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UrlContext } from "../../App";
 import GenericAlert from "../../components/GenericAlert/GenericAlert";
-import GreenButton from "../../components/GenericButton/GenericButton";
+import GenericButton from "../../components/GenericButton/GenericButton";
+import useRetrieveContact from "../../hooks/useRetrieveContact";
 
 
 function DeleteContact(){
 
     const contactsUrl = useContext(UrlContext);
-    const [contact, setContact] = useState()
     const [typeAlert, setTypeAlert] = useState()
     const [message, setAlert] = useState("hola crayola")
     const [alertVisibility, setAlertVisibility] = useState(false)
-
     let { id } = useParams();
+    const contact: any = useRetrieveContact(id)
 
-    useEffect (() => {
-        console.log(id)
-        retrieveContact(id || "")
-        }, []);
+    
+
 
     function deleteC(id: string){
         axios.delete(`${contactsUrl}/${id}`)
@@ -34,20 +32,12 @@ function DeleteContact(){
           })
       }
 
-      function retrieveContact(id: string){
-        axios.get(`${contactsUrl}/${id}`)
-          .then(response => {
-              setContact(response["data"])
-          })
-          .catch(e => {
-              console.log(e)
-          })
-      }
-
 
     return(
         <>
-        
+              
+            <Typography variant="h1">Eliminar Contacto</Typography>
+            
             <GenericAlert
                 typeAlert={typeAlert}
                 message={message}
@@ -61,27 +51,27 @@ function DeleteContact(){
                     Estas Seguro que deseas eliminar a este usuario?
                 </Grid>
                 <Grid item xs={6}>
-                    Nombre: {contact?.["firstName"]}
+                    Nombre: {contact?.contact?.firstName}
                 </Grid>
                 <Grid item xs={6}>
-                    Apellido: {contact?.["lastName"]}
+                    Apellido: {contact?.contact?.lastName}
                 </Grid>
                 <Grid item xs={6}>
-                    Correo: {contact?.["email"]}
+                    Correo: {contact?.contact?.email}
                 </Grid>
                 <Grid item xs={6}>
-                    Numero: {contact?.["phone"]}
+                    Numero: {contact?.contact?.phone}
                 </Grid>
                 <Grid item xs={6}>
-                    <GreenButton
+                    <GenericButton
                         text="Si"
-                        action={() => deleteC(contact?.["_id"] || "")}
+                        action={() => deleteC(contact?.contact?._id)}
                     />
                 </Grid>
                 <Grid item xs={6}>
-                    <GreenButton
+                    <GenericButton
                     text="No"
-                    action={() => console.log("hola")}
+                    action={() => console.log(contact)}
                     color="#FF0000"
                     />
                 </Grid>
