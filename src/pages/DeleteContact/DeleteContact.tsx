@@ -9,8 +9,8 @@ import useRetrieveContact from "../../hooks/useRetrieveContact";
 
 function DeleteContact() {
   const contactsUrl = useContext(UrlContext);
-  const [typeAlert, setTypeAlert] = useState();
-  const [message, setAlert] = useState("hola crayola");
+  const [typeAlert, setTypeAlert] = useState("");
+  const [message, setMessage] = useState("hola crayola");
   const [alertVisibility, setAlertVisibility] = useState(false);
   let { id } = useParams();
   const contact: any = useRetrieveContact(id);
@@ -19,25 +19,22 @@ function DeleteContact() {
     axios
       .delete(`${contactsUrl}/${id}`)
       .then((response) => {
-        console.log(response);
         setAlertVisibility(true);
+        setMessage(
+          `Exito al eliminar al contacto ${response["data"]["firstName"]}`
+        );
+        setTypeAlert("success");
       })
       .catch((e) => {
-        console.log(e);
         setAlertVisibility(true);
+        setMessage(e["message"]);
+        setTypeAlert("error");
       });
   }
 
   return (
     <>
       <Typography variant="h1">Eliminar Contacto</Typography>
-
-      <GenericAlert
-        typeAlert={typeAlert}
-        message={message}
-        alertVisibility={alertVisibility}
-        setAlertVisibility={setAlertVisibility}
-      />
 
       <Paper>
         <Grid container spacing={2}>
@@ -71,6 +68,14 @@ function DeleteContact() {
           </Grid>
         </Grid>
       </Paper>
+
+      {alertVisibility && (
+        <GenericAlert
+          typeAlert={typeAlert}
+          message={message}
+          setAlertVisibility={setAlertVisibility}
+        />
+      )}
     </>
   );
 }
