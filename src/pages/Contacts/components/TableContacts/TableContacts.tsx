@@ -27,13 +27,7 @@ function TableContacts() {
   useEffect(() => {
     retrieveContacts();
     retrieveNumberContacts();
-  }, [
-    setPage,
-    setContacts,
-    setRowsPerPage,
-    retrieveContacts,
-    retrieveNumberContacts,
-  ]);
+  }, [setPage, setContacts, setRowsPerPage]);
 
   function retrieveContacts() {
     console.log(rowsPerPage);
