@@ -14,11 +14,12 @@ import TablePagination from "@mui/material/TablePagination";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import { ContactType } from "../../../../types/Contact";
 
 function TableContacts() {
   const contactsUrl = useContext(UrlContext);
 
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState<ContactType[]>([]);
   const [totalContacts, setTotalContacts] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);

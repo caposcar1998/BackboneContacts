@@ -10,7 +10,7 @@ import useRetrieveContact from "../../hooks/useRetrieveContact";
 function DeleteContact() {
   const contactsUrl = useContext(UrlContext);
   const [typeAlert, setTypeAlert] = useState("");
-  const [message, setMessage] = useState("hola crayola");
+  const [message, setMessage] = useState("");
   const [alertVisibility, setAlertVisibility] = useState(false);
   let { id } = useParams();
   const contact: any = useRetrieveContact(id);

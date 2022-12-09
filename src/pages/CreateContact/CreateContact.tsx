@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { UrlContext } from "../../App";
 import { Grid, Typography } from "@mui/material";
 import GenericAlert from "../../components/GenericAlert/GenericAlert";
+import { ContactType } from "../../types/Contact";
 
 function CreateContact() {
   const contactsUrl = useContext(UrlContext);
@@ -20,7 +21,13 @@ function CreateContact() {
   const [message, setMessage] = useState("");
   const [alertVisibility, setAlertVisibility] = useState(false);
 
-  function Create(contact: any) {
+  function Create(data: any) {
+    const contact: ContactType = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+    };
     axios
       .post(`${contactsUrl}`, {
         firstName: contact.firstName,

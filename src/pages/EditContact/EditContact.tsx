@@ -8,6 +8,7 @@ import { UrlContext } from "../../App";
 import useRetrieveContact from "../../hooks/useRetrieveContact";
 import { Grid, Typography } from "@mui/material";
 import GenericAlert from "../../components/GenericAlert/GenericAlert";
+import { ContactType } from "../../types/Contact";
 
 function EditContact() {
   const contactsUrl = useContext(UrlContext);
@@ -29,12 +30,18 @@ function EditContact() {
   useEffect(() => {}, [reset]);
 
   function Edit(data: any) {
+    const contact: ContactType = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+    };
     axios
       .put(`${contactsUrl}/${id}`, {
-        firstName: data["firstName"],
-        lastName: data["lastName"],
-        email: data["email"],
-        phone: data["phone"],
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        email: contact.email,
+        phone: contact.phone,
       })
       .then((response) => {
         setAlertVisibility(true);
