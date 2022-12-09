@@ -17,7 +17,6 @@ function DeleteContact() {
   const contact: any = useRetrieveContact(id);
 
   function deleteC() {
-    console.log(`${contactsUrl}/${id}`);
     axios
       .delete(`${contactsUrl}/${id}`)
       .then((response) => {
