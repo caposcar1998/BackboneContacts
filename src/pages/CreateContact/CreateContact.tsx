@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import GenericButton from "../../components/GenericButton/GenericButton";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UrlContext } from "../../App";
 import { Grid, Typography } from "@mui/material";
+import GenericAlert from "../../components/GenericAlert/GenericAlert";
 
 type Contact = {
   firstName: string;
@@ -18,8 +19,12 @@ function CreateContact() {
 
   const { register, handleSubmit } = useForm();
   const onSubmit = (data: any) => Create(data);
+  const [typeAlert, setTypeAlert] = useState("");
+  const [message, setMessage] = useState("");
+  const [alertVisibility, setAlertVisibility] = useState(false);
 
   function Create(contact: Contact) {
+    console.log(contact);
     axios
       .post(`${contactsUrl}`, {
         firstName: contact.firstName,
@@ -28,10 +33,16 @@ function CreateContact() {
         phone: contact.phone,
       })
       .then((response) => {
-        console.log(response);
+        setAlertVisibility(true);
+        setMessage(
+          `Exito al crear al contacto ${response["data"]["firstName"]}`
+        );
+        setTypeAlert("success");
       })
       .catch((e) => {
-        console.log(e);
+        setAlertVisibility(true);
+        setMessage(e["message"]);
+        setTypeAlert("error");
       });
   }
 
@@ -114,6 +125,14 @@ function CreateContact() {
           </Grid>
         </Grid>
       </form>
+
+      {alertVisibility && (
+        <GenericAlert
+          typeAlert={typeAlert}
+          message={message}
+          setAlertVisibility={setAlertVisibility}
+        />
+      )}
     </>
   );
 }

@@ -3,10 +3,11 @@ import TextField from "@mui/material/TextField";
 import { useParams } from "react-router-dom";
 import GenericButton from "../../components/GenericButton/GenericButton";
 import axios from "axios";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UrlContext } from "../../App";
 import useRetrieveContact from "../../hooks/useRetrieveContact";
 import { Grid, Typography } from "@mui/material";
+import GenericAlert from "../../components/GenericAlert/GenericAlert";
 
 function EditContact() {
   const contactsUrl = useContext(UrlContext);
@@ -15,6 +16,10 @@ function EditContact() {
   const contact: any = useRetrieveContact(id, reset);
 
   const onSubmit = (data: any) => Edit(data);
+
+  const [typeAlert, setTypeAlert] = useState("");
+  const [message, setMessage] = useState("hola crayola");
+  const [alertVisibility, setAlertVisibility] = useState(false);
 
   useEffect(() => {}, [reset]);
 
@@ -27,10 +32,16 @@ function EditContact() {
         phone: data["phone"],
       })
       .then((response) => {
-        console.log("exito");
+        setAlertVisibility(true);
+        setMessage(
+          `Exito al editar al contacto ${response["data"]["firstName"]}`
+        );
+        setTypeAlert("success");
       })
       .catch((e) => {
-        console.log(e);
+        setAlertVisibility(true);
+        setMessage(e["message"]);
+        setTypeAlert("error");
       });
   }
 
@@ -110,6 +121,13 @@ function EditContact() {
           </Grid>
         </Grid>
       </form>
+      {alertVisibility && (
+        <GenericAlert
+          typeAlert={typeAlert}
+          message={message}
+          setAlertVisibility={setAlertVisibility}
+        />
+      )}
     </>
   );
 }
