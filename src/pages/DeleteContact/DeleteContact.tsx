@@ -6,6 +6,7 @@ import { UrlContext } from "../../App";
 import GenericAlert from "../../components/GenericAlert/GenericAlert";
 import GenericButton from "../../components/GenericButton/GenericButton";
 import useRetrieveContact from "../../hooks/useRetrieveContact";
+import { ResponseType } from "../../types/Responses";
 
 function DeleteContact() {
   const contactsUrl = useContext(UrlContext);
@@ -15,7 +16,8 @@ function DeleteContact() {
   let { id } = useParams();
   const contact: any = useRetrieveContact(id);
 
-  function deleteC(id: string) {
+  function deleteC() {
+    console.log(`${contactsUrl}/${id}`);
     axios
       .delete(`${contactsUrl}/${id}`)
       .then((response) => {
@@ -26,8 +28,12 @@ function DeleteContact() {
         setTypeAlert("success");
       })
       .catch((e) => {
+        const error: ResponseType = {
+          message: e["message"],
+          code: e["code"],
+        };
         setAlertVisibility(true);
-        setMessage(e["message"]);
+        setMessage(error.message);
         setTypeAlert("error");
       });
   }
@@ -101,10 +107,7 @@ function DeleteContact() {
               alignItems="center"
               justifyContent="center"
             >
-              <GenericButton
-                text="Si"
-                action={() => deleteC(contact?.contact?._id)}
-              />
+              <GenericButton text="Si" action={deleteC} />
             </Grid>
           </Grid>
           <Grid item xs={6}>

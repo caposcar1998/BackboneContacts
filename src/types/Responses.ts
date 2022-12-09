@@ -1,9 +1,4 @@
-export type Sucess = {
+export type ResponseType = {
   message: string;
-  code: string;
-};
-
-export type Error = {
-  message: string;
-  code: string;
+  code: number;
 };

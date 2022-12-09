@@ -9,6 +9,7 @@ import useRetrieveContact from "../../hooks/useRetrieveContact";
 import { Grid, Typography } from "@mui/material";
 import GenericAlert from "../../components/GenericAlert/GenericAlert";
 import { ContactType } from "../../types/Contact";
+import { ResponseType } from "../../types/Responses";
 
 function EditContact() {
   const contactsUrl = useContext(UrlContext);
@@ -44,15 +45,21 @@ function EditContact() {
         phone: contact.phone,
       })
       .then((response) => {
+        const res: ResponseType = {
+          message: response["data"]["firstName"],
+          code: response["status"],
+        };
         setAlertVisibility(true);
-        setMessage(
-          `Exito al editar al contacto ${response["data"]["firstName"]}`
-        );
+        setMessage(`Exito al editar al contacto ${res.message}`);
         setTypeAlert("success");
       })
       .catch((e) => {
+        const error: ResponseType = {
+          message: e["message"],
+          code: e["code"],
+        };
         setAlertVisibility(true);
-        setMessage(e["message"]);
+        setMessage(error.message);
         setTypeAlert("error");
       });
   }

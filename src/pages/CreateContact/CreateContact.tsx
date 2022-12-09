@@ -7,6 +7,7 @@ import { UrlContext } from "../../App";
 import { Grid, Typography } from "@mui/material";
 import GenericAlert from "../../components/GenericAlert/GenericAlert";
 import { ContactType } from "../../types/Contact";
+import { ResponseType } from "../../types/Responses";
 
 function CreateContact() {
   const contactsUrl = useContext(UrlContext);
@@ -36,16 +37,21 @@ function CreateContact() {
         phone: contact.phone,
       })
       .then((response) => {
+        const res: ResponseType = {
+          message: response["data"]["firstName"],
+          code: response["status"],
+        };
         setAlertVisibility(true);
-        setMessage(
-          `Exito al crear al contacto ${response["data"]["firstName"]}`
-        );
+        setMessage(`Exito al crear al contacto ${res.message}`);
         setTypeAlert("success");
       })
       .catch((e) => {
-        console.log(e);
+        const error: ResponseType = {
+          message: e["message"],
+          code: e["code"],
+        };
         setAlertVisibility(true);
-        setMessage(e["message"]);
+        setMessage(error.message);
         setTypeAlert("error");
       });
   }
