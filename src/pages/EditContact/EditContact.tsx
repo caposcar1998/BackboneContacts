@@ -45,6 +45,12 @@ function EditContact() {
       });
   }
 
+  function closeEditScreen() {
+    setAlertVisibility(true);
+    setMessage("Regresando a home");
+    setTypeAlert("info");
+  }
+
   return (
     <>
       <Typography variant="h1">Editar contacto</Typography>
@@ -109,7 +115,7 @@ function EditContact() {
               />
             </Grid>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <Grid
               container
               direction="column"
@@ -117,6 +123,20 @@ function EditContact() {
               justifyContent="center"
             >
               <GenericButton text="Editar" action={onSubmit} />
+            </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <GenericButton
+                text="Cancelar"
+                action={closeEditScreen}
+                color="#FF0000"
+              />
             </Grid>
           </Grid>
         </Grid>

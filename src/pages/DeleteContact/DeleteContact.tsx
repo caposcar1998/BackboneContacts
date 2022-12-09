@@ -32,6 +32,12 @@ function DeleteContact() {
       });
   }
 
+  function closeDeleteScreen() {
+    setAlertVisibility(true);
+    setMessage("Regresando a home");
+    setTypeAlert("info");
+  }
+
   return (
     <>
       <Typography variant="h1">Eliminar Contacto</Typography>
@@ -39,32 +45,81 @@ function DeleteContact() {
       <Paper>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            Estas Seguro que deseas eliminar a este usuario?
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              Estas Seguro que deseas eliminar a este usuario?
+            </Grid>
           </Grid>
           <Grid item xs={6}>
-            Nombre: {contact?.contact?.firstName}
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              Nombre: {contact?.contact?.firstName}
+            </Grid>
           </Grid>
           <Grid item xs={6}>
-            Apellido: {contact?.contact?.lastName}
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              Apellido: {contact?.contact?.lastName}
+            </Grid>
           </Grid>
           <Grid item xs={6}>
-            Correo: {contact?.contact?.email}
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              Correo: {contact?.contact?.email}
+            </Grid>
           </Grid>
           <Grid item xs={6}>
-            Numero: {contact?.contact?.phone}
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              Numero: {contact?.contact?.phone}
+            </Grid>
           </Grid>
           <Grid item xs={6}>
-            <GenericButton
-              text="Si"
-              action={() => deleteC(contact?.contact?._id)}
-            />
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <GenericButton
+                text="Si"
+                action={() => deleteC(contact?.contact?._id)}
+              />
+            </Grid>
           </Grid>
           <Grid item xs={6}>
-            <GenericButton
-              text="No"
-              action={() => console.log(contact)}
-              color="#FF0000"
-            />
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <GenericButton
+                text="No"
+                action={closeDeleteScreen}
+                color="#FF0000"
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Paper>
