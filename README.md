@@ -58,18 +58,20 @@ For this installation you need to have all the tech stack installed (you can ski
 
 ### Structure
 
-.
-├── ...
-├── src # Test files (alternatively
-│ ├── components # General components of app
-│ ├── hooks # Custom hooks
-│ └── media # Static media
-│ └── pages # Pages of the app
-│ └── types # Ts types
-│ └── Routing.tsx # Routing controller
-└── Dockerfile
-└── docker-compose.yml
-└── MakeFile
+```bash
+    .
+    ├── ...
+    ├── src # Test files (alternatively
+    │ ├── components # General components of app
+    │ ├── hooks # Custom hooks
+    │ └── media # Static media
+    │ └── pages # Pages of the app
+    │ └── types # Ts types
+    │ └── Routing.tsx # Routing controller
+    └── Dockerfile
+    └── docker-compose.yml
+    └── MakeFile
+```
 
 # Ports
 
