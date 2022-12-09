@@ -61,7 +61,7 @@ For this installation you need to have all the tech stack installed (you can ski
 ```bash
     .
     ├── ...
-    ├── src # Test files (alternatively
+    ├── src
     │ ├── components # General components of app
     │ ├── hooks # Custom hooks
     │ └── media # Static media
