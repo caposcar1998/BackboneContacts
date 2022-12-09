@@ -7,24 +7,20 @@ import { UrlContext } from "../../App";
 import { Grid, Typography } from "@mui/material";
 import GenericAlert from "../../components/GenericAlert/GenericAlert";
 
-type Contact = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: Number;
-};
-
 function CreateContact() {
   const contactsUrl = useContext(UrlContext);
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const onSubmit = (data: any) => Create(data);
   const [typeAlert, setTypeAlert] = useState("");
   const [message, setMessage] = useState("");
   const [alertVisibility, setAlertVisibility] = useState(false);
 
-  function Create(contact: Contact) {
-    console.log(contact);
+  function Create(contact: any) {
     axios
       .post(`${contactsUrl}`, {
         firstName: contact.firstName,
@@ -40,6 +36,7 @@ function CreateContact() {
         setTypeAlert("success");
       })
       .catch((e) => {
+        console.log(e);
         setAlertVisibility(true);
         setMessage(e["message"]);
         setTypeAlert("error");
@@ -61,7 +58,9 @@ function CreateContact() {
               <TextField
                 label="Nombre"
                 {...register("firstName", { required: true, maxLength: 20 })}
+                aria-invalid={errors.firstName ? "true" : "false"}
               />
+              {errors?.firstName && <p role="alert">Nombre requerido</p>}
             </Grid>
           </Grid>
           <Grid item xs={6}>
@@ -77,7 +76,9 @@ function CreateContact() {
                   required: true,
                   pattern: /^[A-Za-z]+$/i,
                 })}
+                aria-invalid={errors.lastName ? "true" : "false"}
               />
+              {errors?.lastName && <p role="alert">Apellido requerido</p>}
             </Grid>
           </Grid>
           <Grid item xs={6}>
@@ -93,7 +94,9 @@ function CreateContact() {
                   required: true,
                   pattern: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$/i,
                 })}
+                aria-invalid={errors.email ? "true" : "false"}
               />
+              {errors.email && <p role="alert">Email formato incorrecto</p>}
             </Grid>
           </Grid>
           <Grid item xs={6}>
@@ -110,7 +113,9 @@ function CreateContact() {
                   pattern:
                     /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i,
                 })}
+                aria-invalid={errors.email ? "true" : "false"}
               />
+              {errors?.phone && <p role="alert">Numero formato incorrecto</p>}
             </Grid>
           </Grid>
           <Grid item xs={12}>
@@ -120,7 +125,7 @@ function CreateContact() {
               alignItems="center"
               justifyContent="center"
             >
-              <GenericButton text="Crear" action={onSubmit} />
+              <GenericButton text="Crear" />
             </Grid>
           </Grid>
         </Grid>

@@ -12,7 +12,12 @@ import GenericAlert from "../../components/GenericAlert/GenericAlert";
 function EditContact() {
   const contactsUrl = useContext(UrlContext);
   let { id } = useParams();
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const contact: any = useRetrieveContact(id, reset);
 
   const onSubmit = (data: any) => Edit(data);
@@ -66,7 +71,9 @@ function EditContact() {
               <TextField
                 defaultValue={contact?.contact?.firstName}
                 {...register("firstName", { required: true, maxLength: 20 })}
+                aria-invalid={errors.firstName ? "true" : "false"}
               />
+              {errors?.firstName && <p role="alert">Nombre requerido</p>}
             </Grid>
           </Grid>
           <Grid item xs={6}>
@@ -79,7 +86,9 @@ function EditContact() {
               <TextField
                 defaultValue={contact?.contact?.lastName}
                 {...register("lastName", { required: true })}
+                aria-invalid={errors.lastName ? "true" : "false"}
               />
+              {errors?.lastName && <p role="alert">Apellido requerido</p>}
             </Grid>
           </Grid>
           <Grid item xs={6}>
@@ -95,7 +104,9 @@ function EditContact() {
                   required: true,
                   pattern: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$/i,
                 })}
+                aria-invalid={errors.email ? "true" : "false"}
               />
+              {errors.email && <p role="alert">Email formato incorrecto</p>}
             </Grid>
           </Grid>
           <Grid item xs={6}>
@@ -112,7 +123,9 @@ function EditContact() {
                   pattern:
                     /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i,
                 })}
+                aria-invalid={errors.email ? "true" : "false"}
               />
+              {errors?.phone && <p role="alert">Numero formato incorrecto</p>}
             </Grid>
           </Grid>
           <Grid item xs={6}>
