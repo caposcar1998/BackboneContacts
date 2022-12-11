@@ -10,7 +10,7 @@ function NavBar() {
       <AppBar position="sticky" sx={{ backgroundColor: "black" }}>
         <Toolbar>
           <Grid container>
-            <Grid item xs={4} alignItems="center" justifyContent="center">
+            <Grid item xs={4}>
               <a href="https://www.backbonesystems.io/" id="backBoneLogo">
                 <img
                   src={logo}

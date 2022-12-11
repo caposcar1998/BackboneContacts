@@ -21,37 +21,24 @@ function TableContacts() {
 
   const [contacts, setContacts] = useState<ContactType[]>([]);
   const [totalContacts, setTotalContacts] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    retrieveContacts();
+    retrieveContacts(0);
     retrieveNumberContacts();
-  }, [setPage, setContacts, setRowsPerPage]);
+  }, [setPage, setContacts]);
 
-  function retrieveContacts() {
-    console.log(rowsPerPage);
-    console.log(`${contactsUrl}?page=${page}?perPage=${rowsPerPage}`);
-    if (page === 0) {
-      axios
-        .get(`${contactsUrl}?perPage=${rowsPerPage}`)
-        .then((response) => {
-          setContacts(response["data"]["results"]);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    } else {
-      axios
-        .get(`${contactsUrl}?page=${page}?perPage=${rowsPerPage}`)
-        .then((response) => {
-          setContacts(response["data"]["results"]);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
+  function retrieveContacts(actualPage: number) {
+    console.log(`${contactsUrl}?page=${actualPage + 1}?perPage=10`);
+    axios
+      .get(`${contactsUrl}?page=${actualPage + 1}?perPage=10`)
+      .then((response) => {
+        setContacts(response["data"]["results"]);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   function retrieveNumberContacts() {
@@ -67,14 +54,7 @@ function TableContacts() {
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
-    retrieveContacts();
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    retrieveContacts();
+    retrieveContacts(newPage);
   };
 
   return (
@@ -120,13 +100,12 @@ function TableContacts() {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 20, 30]}
+        rowsPerPageOptions={[10]}
         component="div"
         count={totalContacts}
         page={page}
-        rowsPerPage={rowsPerPage}
+        rowsPerPage={10}
         onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
   );
