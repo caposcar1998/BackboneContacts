@@ -66,7 +66,7 @@ function TableContacts() {
               <TableCell>Nombre</TableCell>
               <TableCell>Apellido</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Numero</TableCell>
+              <TableCell>Número</TableCell>
               <TableCell>Eliminar</TableCell>
               <TableCell>Editar</TableCell>
             </TableRow>

@@ -139,7 +139,7 @@ function EditContact() {
                 })}
                 aria-invalid={errors.email ? "true" : "false"}
               />
-              {errors?.phone && <p role="alert">Numero formato incorrecto</p>}
+              {errors?.phone && <p role="alert">Número formato incorrecto</p>}
             </Grid>
           </Grid>
           <Grid item xs={6}>

@@ -96,7 +96,7 @@ function DeleteContact() {
               alignItems="center"
               justifyContent="center"
             >
-              Numero: {contact?.contact?.phone}
+              Número: {contact?.contact?.phone}
             </Grid>
           </Grid>
           <Grid item xs={6}>
